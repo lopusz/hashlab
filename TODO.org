@@ -1,0 +1,5 @@
+* Issues & ideas
+  + *[topic]* Issue.
+
+* Done
+  + *[topic]* Closed issue.
