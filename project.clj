@@ -30,7 +30,7 @@
   
   ; PLUGINS + CONFIGURATION
 
-  :plugins [ [codox "0.8.7"] ]
+  :plugins [ [codox "0.8.10"] ]
 
   ;; codox configuration
 
