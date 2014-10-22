@@ -1,4 +1,4 @@
-(ns hashlab.freq
+(ns hashlab.frequency
   (:refer-clojure :exclude [assert get merge])
   (:require
      [ pjstadig.assertions :refer [assert]])
@@ -9,22 +9,33 @@
 ;; * with probability 'confidence'.
 
 
-(defn new-count-min-sketch [ ^double epsOfTotalCount
-                             ^double confidence
-                             ^Integer seed]
-  (CountMinSketch.  epsOfTotalCount confidence seed))
+(defprotocol ApproxStringFrequencyCounter
+  (add-str! [ asfc ^String s]
+            [ asfc ^String s ^Long count])
+  (approx-count-str [asfc ^String s])
+  (merge-internal [first-asfc rest-asfcs]))
 
-(defn add!
-  ([ ^CountMinSketch cms ^String s]
-    (. cms add s 1)
-    cms)
-  ([ ^CountMinSketch cms ^String s ^Long count ]
-    (. cms add s count)
-    cms))
-
-
-(defn get [ ^CountMinSketch cms ^String s]
-  (. cms estimateCount s))
+(extend-protocol ApproxStringFrequencyCounter
+  CountMinSketch
+  (add-str!
+    ([ cms ^String s]
+       (. cms add s 1)
+       cms)
+    ([ cms ^String s ^Long count ]
+       (. cms add s count)
+       cms))
+  (approx-count-str [cms ^String s]
+    (. cms estimateCount s))
+  (merge-internal [ cms-first cms-rest ]
+    (CountMinSketch/merge
+      (into-array
+        CountMinSketch
+        (cons cms-first cms-rest)))))
 
 (defn merge [ & args ]
-  (CountMinSketch/merge (into-array CountMinSketch args)))
+  (merge-internal (first args) (rest args)))
+
+(defn create-count-min-sketch [ ^double epsOfTotalCount
+                                ^double confidence
+                                ^Integer seed]
+  (CountMinSketch.  epsOfTotalCount confidence seed))
