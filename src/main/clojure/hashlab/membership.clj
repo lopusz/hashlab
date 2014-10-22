@@ -7,6 +7,7 @@
 ;; IDEA Add support for Quotient Filter
 ;; http://en.wikipedia.org/wiki/Quotient_filter
 ;; http://stackoverflow.com/questions/12212931/is-there-an-open-source-implementation-of-the-quotient-filter
+;; https://github.com/vedantk/quotient-filter
 
 (defprotocol ApproxMembershipStringFilter
   (add-str! [amsf ^String s])
@@ -40,7 +41,7 @@
   (merge-internal (first sets) (rest sets)))
 
 (defn create-hash-set []
-  (java.util.HashSet.))
+  (HashSet.))
 
 (defn create-bloom-filter [ n m ]
   (BloomFilter. n m))
