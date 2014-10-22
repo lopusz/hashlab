@@ -1,22 +1,6 @@
-* Use of probabilistic data structures
-
 * Helpers
-** Wrapper around
-   https://github.com/addthis/stream-lib
-** Look how it was implemented in Narrator
-   https://github.com/ztellman/narrator/blob/master/src/narrator/operators/streaming.clj
-** Use protocols in a style of Enter the Matrix presentation by Mike Anderson
-
-* Functionality
-** Bloom filters
-   (add
-** Top-K
-   (add
-** Sketches
-   #+BEGIN_SRC text
-   (def p (make-new-count-min-sketch))
-   (add! p "xxx")
-   (add! p "xxx" 5)
-   (get p "xxx")
-   (merge p1 p2)
-   #+END_SRC
+  + Java libraray implementing a lot of functionality
+    https://github.com/addthis/stream-lib
+  + Look how it was implemented in Narrator
+    https://github.com/ztellman/narrator/blob/master/src/narrator/operators/streaming.clj
+  + Use protocols in a style of Enter the Matrix presentation by Mike Anderson
