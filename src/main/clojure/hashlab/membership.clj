@@ -1,31 +1,43 @@
 (ns hashlab.membership
-  (:refer-clojure :exclude [assert get merge])
+  (:refer-clojure :exclude [merge])
   (:import
     [java.util AbstractSet HashSet]
-    [com.clearspring.analytics.stream.membership BloomFilter]))
+    [com.clearspring.analytics.stream.membership Filter BloomFilter]))
 
-;;; AMS = Approximate Membership Query
+;; IDEA Add support for Quotient Filter
+;; http://en.wikipedia.org/wiki/Quotient_filter
+;; http://stackoverflow.com/questions/12212931/is-there-an-open-source-implementation-of-the-quotient-filter
 
-(defprotocol AMQString
-  (add! [amqs ^String s])
-  (maybe-contains? [ amqs ^String s])
-  (merge [ & amqs]))
+(defprotocol ApproxMembershipStringFilter
+  (add-str! [amsf ^String s])
+  (maybe-contains-str? [ amsf ^String s])
+  (merge-internal [ amsf amsfs]))
 
-(extend-protocol AMQString
-
+(extend-protocol ApproxMembershipStringFilter
   AbstractSet
-  (add! [ set ^String s]
+  (add-str! [set ^String s]
     (.add set s)
     set)
-  (maybe-contains? [set ^String s]
+  (maybe-contains-str? [set ^String s]
     (.contains set s))
+  (merge-internal [ first-set rest-sets ]
+    (dorun
+      (map
+       #(.addAll first-set %) rest-sets))
+     first-set)
 
   BloomFilter
-  (add! [ bf ^String s]
-    (. bf add s)
+  (add-str! [bf ^String s]
+    (.add bf s)
     bf)
-  (maybe-contains? [ bf ^String s]
-    (. bf isPresent s)))
+  (maybe-contains-str? [bf ^String s]
+    (. bf isPresent s))
+  (merge-internal [ first-bf rest-bfs ]
+    (.merge first-bf
+       (into-array Filter rest-bfs))))
+
+(defn merge [ & sets ]
+  (merge-internal (first sets) (rest sets)))
 
 (defn create-hash-set []
   (java.util.HashSet.))

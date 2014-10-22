@@ -20,7 +20,10 @@
  
     ;; Runtime assertions
     [pjstadig/assertions "0.1.0"]
-    [com.clearspring.analytics/stream "2.7.0"]]
+
+    ;; Commit 274 is used for stream-lib
+    ;; 1a2799fbff3ef0426fdaadd37e4c744eeaeff908 Merge pull request #84 
+    [com.clearspring.analytics/stream "2.8.0-SNAPSHOT"]]
   
   ; SOURCE DIRECTORY RECONFIGURATION
 
