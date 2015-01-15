@@ -43,5 +43,5 @@
 (defn create-hash-set []
   (HashSet.))
 
-(defn create-bloom-filter [ n m ]
-  (BloomFilter. n m))
+(defn create-bloom-filter [ ^Integer n ^Double max-false-pos-prob ]
+  (BloomFilter. ^Integer n ^Double max-false-pos-prob))
