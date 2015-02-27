@@ -1,6 +1,6 @@
 * hashlab
 
-  [[http://clojars.org/hashlab][http://clojars.org/langlab/latest-version.svg]]
+  [[http://clojars.org/hashlab][http://clojars.org/hashlab/latest-version.svg]]
   
 * License
 
