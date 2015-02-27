@@ -1,6 +1,6 @@
 * hashlab
-  
-  Project description
+
+  [[http://clojars.org/hashlab][http://clojars.org/langlab/latest-version.svg]]
   
 * License
 
