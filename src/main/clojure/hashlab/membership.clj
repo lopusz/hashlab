@@ -24,7 +24,7 @@
   (merge-internal [ first-set rest-sets ]
     (dorun
       (map
-       #(.addAll first-set %) rest-sets))
+        #(.addAll first-set %) rest-sets))
      first-set)
 
   BloomFilter

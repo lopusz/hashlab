@@ -1,4 +1,4 @@
-(defproject hashlab "0.1.0-SNAPSHOT"
+(defproject hashlab "0.0.1-SNAPSHOT"
 
   ; GENERAL OPTIONS
 
@@ -21,9 +21,7 @@
     ;; Runtime assertions
     [pjstadig/assertions "0.1.0"]
 
-    ;; Commit 274 is used for stream-lib
-    ;; 1a2799fbff3ef0426fdaadd37e4c744eeaeff908 Merge pull request #84 
-    [com.clearspring.analytics/stream "2.8.0-SNAPSHOT"]]
+    [com.clearspring.analytics/stream "2.8.0"]]
   
   ; SOURCE DIRECTORY RECONFIGURATION
 
