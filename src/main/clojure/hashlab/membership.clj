@@ -45,3 +45,7 @@
 
 (defn create-bloom-filter [ ^Integer n ^Double max-false-pos-prob ]
   (BloomFilter. ^Integer n ^Double max-false-pos-prob))
+
+(defn add-all-str! [ membership-filter seq ]
+  (dorun (map #(add-str! membership-filter %) seq))
+  membership-filter)

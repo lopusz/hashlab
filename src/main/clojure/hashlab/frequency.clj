@@ -66,3 +66,7 @@
 
 (defn create-hash-map []
   (HashMap.))
+
+(defn add-all-str! [ frequency-counter seq ]
+  (dorun (map #(add-str! frequency-counter %) seq))
+  frequency-counter)
