@@ -1,4 +1,5 @@
-* Helpers
+* Various thoughts
+  + Possibly add immutable interface (creation from seq + merging)
   + Java libraray implementing a lot of functionality
     https://github.com/addthis/stream-lib
   + Look how it was implemented in Narrator

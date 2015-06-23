@@ -1,8 +1,70 @@
 * hashlab
 
+  Probabilistic data structures in Clojure.
+
+  Uses [[stream-lib][https://github.com/addthis/stream-lib]] under the hood.
+
   [[http://clojars.org/hashlab][http://clojars.org/hashlab/latest-version.svg]]
-  
-* License
 
-  Distributed under the Eclipse Public License, the same as Clojure.
+** Usage
 
+   Currently, approximate membership and frequency for strings is supported.
+
+   Library allows for a drop in replacement of approximate structures with
+   "exact" ones.
+
+   Simple example of membership functionality with Bloom filters:
+
+   #+BEGIN_SRC clojure :tangle test-member.clj
+   (require '[ hashlab.membership :as hm])
+
+   ;; Approximate membership with bloom filters
+
+   (def bf (hm/create-bloom-filter 100 1))
+
+   (hm/add-all-str! bf [ "scala" "java" "clojure" ])
+
+   (println (hm/maybe-contains-str? bf "scala"))   ; true
+   (println (hm/maybe-contains-str? bf "java"))    ; true
+   (println (hm/maybe-contains-str? bf "clojure")) ; true
+   (println (hm/maybe-contains-str? bf "ruby"))    ; false
+
+   ;; Exact membership with hash set
+
+   (def hs (hm/create-hash-set))
+
+   (hm/add-all-str! hs [ "scala" "java" "clojure" ])
+
+   (println (hm/maybe-contains-str? hs "scala"))  ; true
+   (println (hm/maybe-contains-str? hs "java"))   ; true
+   (println (hm/maybe-contains-str? hs "clojure")); true
+   (println (hm/maybe-contains-str? hs "ruby"))   ; false
+   #+END_SRC
+
+   Simple example of approximate frequency counting with CountMinSketch:
+   #+BEGIN_SRC clojure :tangle test-freq.clj
+   (require '[ hashlab.frequency :as hf])
+
+   (def cms
+     (hf/create-count-min-sketch 0.0001 0.99 7364181))
+
+   (hf/add-all-str! cms [ "scala" "java" "scala" "clojure" "clojure"])
+
+   (println "clojure ->" (hf/approx-count-str cms "clojure")) ; clojure -> 2
+   (println "scala ->" (hf/approx-count-str cms "scala"))     ; scala -> 2
+   (println "java ->" (hf/approx-count-str cms "java"))       ; java -> 1
+   (println "ruby ->" (hf/approx-count-str cms "ruby"))       ; ruby -> 0
+
+   ;; Exact counting with hash map
+
+   (def hm (hf/create-hash-map))
+
+   (hf/add-all-str! hm [ "scala" "java" "scala" "clojure" "clojure"])
+
+   (println "clojure ->" (hf/approx-count-str hm "clojure")) ; clojure -> 2
+   (println "scala ->" (hf/approx-count-str hm "scala"))     ; scala -> 2
+   (println "java ->" (hf/approx-count-str hm "java"))       ; java -> 1
+   (println "ruby ->" (hf/approx-count-str hm "ruby"))       ; ruby -> 0
+   #+END_SRC
+** License
+   Distributed under the Eclipse Public License, the same as Clojure.
