@@ -1,4 +1,4 @@
-(defproject hashlab "0.1.0-SNAPSHOT"
+(defproject hashlab "0.1.0"
 
   ; GENERAL OPTIONS
 
