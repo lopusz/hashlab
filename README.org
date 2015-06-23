@@ -2,7 +2,7 @@
 
   Probabilistic data structures in Clojure.
 
-  Uses [[stream-lib][https://github.com/addthis/stream-lib]] under the hood.
+  Uses [[https://github.com/addthis/stream-lib][stream-lib]] under the hood.
 
   [[http://clojars.org/hashlab][http://clojars.org/hashlab/latest-version.svg]]
 
@@ -18,7 +18,7 @@
    #+BEGIN_SRC clojure :tangle test-member.clj
    (require '[ hashlab.membership :as hm])
 
-   ;; Approximate membership with bloom filters
+   ;; Approximate membership with Bloom filters
 
    (def bf (hm/create-bloom-filter 100 1))
 
@@ -44,6 +44,8 @@
    Simple example of approximate frequency counting with CountMinSketch:
    #+BEGIN_SRC clojure :tangle test-freq.clj
    (require '[ hashlab.frequency :as hf])
+
+   ;; Approximate counting with count min sketch
 
    (def cms
      (hf/create-count-min-sketch 0.0001 0.99 7364181))
